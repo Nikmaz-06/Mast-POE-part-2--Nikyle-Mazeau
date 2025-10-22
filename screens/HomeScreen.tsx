@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, FlatList, Alert, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, FlatList, Alert, StyleSheet, SafeAreaView, ScrollView, } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 type MenuItem = {
@@ -51,7 +51,7 @@ export default function HomeScreen() {
   /* input section */
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>Chef's Menu</Text>
+      <Text style={styles.heading}>Today's Menu</Text>
       <Text style={styles.subHeading}>Total Menu Items: {menu.length}</Text>
 
       <FlatList
