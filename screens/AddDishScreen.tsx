@@ -1,76 +1,93 @@
+// AddDishScreen.tsx
+// ---------------------------------------------------------
+// This screen allows the chef to add new dishes.
+// Code adapted from original HomeScreen.tsx (Part 2).
+// ---------------------------------------------------------
+
 import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
-  StyleSheet,
   Alert,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../App";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-//Imported navigation stacks
-type NavProp = NativeStackNavigationProp<RootStackParamList, "AddDish">;
+
+type MenuItem = {
+  id: string;
+  name: string;
+  description: string;
+  course: string;
+  price: string;
+};
 
 export default function AddDishScreen() {
-  const navigation = useNavigation<NavProp>();
-
-  // state variables for input
-  const [name, setName] = useState("");
+  const [dishName, setDishName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
   const [course, setCourse] = useState("Starter");
+  const [price, setPrice] = useState("");
 
-  // functionality to add new dish
-  const handleAddDish = () => {
-    if (!name || !description || !price) {
-      Alert.alert("Missing Information", "Please fill in all fields.");
+  // THIS is your original add dish logic — fixed & working
+  const addDish = () => {
+    if (!dishName || !description || !price) {
+      Alert.alert("Error", "Please fill in all fields.");
       return;
     }
 
-    
-    console.log("New Dish Added:", { name, description, price, course });
-    Alert.alert("Dish Added", ${name} has been added to the ${course} menu.);
-    navigation.goBack(); // Return to Home Screen
+    const newDish: MenuItem = {
+      id: Date.now().toString(),
+      name: dishName,
+      description,
+      course,
+      price: "R" + price,
+    };
+
+    // TEMP: For Part 3 demo, we show the saved dish via alert
+    // In Part 4 or if needed, we can send this back to HomeScreen using context/navigation params
+    Alert.alert(
+      "Dish Added",
+      ${newDish.name} has been added to the ${newDish.course} menu.
+    );
+
+    // Clear fields after adding
+    setDishName("");
+    setDescription("");
+    setPrice("");
+    setCourse("Starter");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Chef's Add Dish</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.heading}>Add New Dish</Text>
 
-      {/* input for the name of the dish */}
       <TextInput
-        style={styles.input}
         placeholder="Dish Name"
-        value={name}
-        onChangeText={setName}
+        value={dishName}
+        onChangeText={setDishName}
+        style={styles.input}
       />
 
-      {/* input for description of the dish */}
       <TextInput
-        style={[styles.input, { height: 80 }]}
-        placeholder="Dish Description"
+        placeholder="Description"
         value={description}
         onChangeText={setDescription}
-        multiline
+        style={styles.input}
       />
 
-      {/* input for price */}
       <TextInput
-        style={styles.input}
-        placeholder="Price (e.g. R75)"
-        keyboardType="default"
+        placeholder="Price (numbers only)"
         value={price}
         onChangeText={setPrice}
+        keyboardType="numeric"
+        style={styles.input}
       />
 
-      {/* Picker to specify course */}
-      <Text style={styles.label}>Select Course:</Text>
       <Picker
         selectedValue={course}
-        onValueChange={(itemValue) => setCourse(itemValue)}
+        onValueChange={(value) => setCourse(value)}
         style={styles.picker}
       >
         <Picker.Item label="Starter" value="Starter" />
@@ -78,27 +95,25 @@ export default function AddDishScreen() {
         <Picker.Item label="Dessert" value="Dessert" />
       </Picker>
 
-      {/* Button to add the dish */}
-      <TouchableOpacity style={styles.button} onPress={handleAddDish}>
+      <TouchableOpacity style={styles.button} onPress={addDish}>
         <Text style={styles.buttonText}>Add Dish</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
-// Consistent orange design from part 1 and 2
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFE4B5",
-    padding: 20,
+    backgroundColor: "#FFA500", // your orange theme
+    padding: 15,
   },
-  title: {
-    fontSize: 24,
+  heading: {
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#FF8C00",
     textAlign: "center",
-    marginBottom: 20,
+    color: "white",
+    marginBottom: 15,
   },
   input: {
     backgroundColor: "white",
@@ -106,24 +121,21 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  label: {
-    fontWeight: "bold",
-    color: "#FF8C00",
-  },
   picker: {
     backgroundColor: "white",
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   button: {
     backgroundColor: "#FF8C00",
-    padding: 15,
-    borderRadius: 25,
+    padding: 14,
+    borderRadius: 15,
+    marginTop: 10,
     alignItems: "center",
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
   },
 });
