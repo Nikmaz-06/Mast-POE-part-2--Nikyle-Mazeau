@@ -69,9 +69,9 @@ export default function HomeScreen() {
 
       {/* average prices displayed */}
       <View style={styles.averageContainer}>
-        <Text style={styles.averageText}>Average Starter: R{calculateAverage("Starter")}</Text>
-        <Text style={styles.averageText}>Average Main: R{calculateAverage("Main")}</Text>
-        <Text style={styles.averageText}>Average Dessert: R{calculateAverage("Dessert")}</Text>
+        <Text style={styles.averageText}>Average price Starter: R{calculateAverage("Starter")}</Text>
+        <Text style={styles.averageText}>Average price Main: R{calculateAverage("Main")}</Text>
+        <Text style={styles.averageText}>Average price Dessert: R{calculateAverage("Dessert")}</Text>
       </View>
       
       <FlatList
