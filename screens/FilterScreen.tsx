@@ -19,12 +19,11 @@ export default function FilterScreen() {
     { id: "2", name: "Grilled Salmon", description: "Fresh salmon fillet with lemon butter sauce.", course: "Main", price: "R150" },
     { id: "3", name: "Chocolate Mousse", description: "Rich and smooth dark chocolate mousse.", course: "Dessert", price: "R60" },
     { id: "4", name: "Steak Tartare", description: "Finely chopped raw beef with egg yolk and seasoning.", course: "Main", price: "R120" },
-    { id: "5", name: "Grilled Salmon", description: "Fresh salmon fillet with lemon butter sauce.", course: "Main", price: "R150" },
-    { id: "6", name: "Chicken Alfredo", description: "Pasta with creamy Alfredo sauce and grilled chicken.", course: "Main", price: "R110" },
-    { id: "7", name: "Crème Brûlée", description: "Classic custard dessert with caramelized sugar top.", course: "Dessert", price: "R65" },
-    { id: "8", name: "Chocolate Mousse", description: "Rich and smooth dark chocolate mousse.", course: "Dessert", price: "R60" },
+    { id: "5", name: "Stuffed Mushrooms", description: "Mushrooms filled with cream cheese and herbs.", course: "Starter", price: "R55" },
+    { id: "6", name: "Garlic Prawns", description: "Juicy prawns sautéed in garlic butter sauce.", course: "Starter", price: "R70" },
+    { id: "7", name: "Chicken Alfredo", description: "Pasta with creamy Alfredo sauce and grilled chicken.", course: "Main", price: "R110" },
+    { id: "8", name: "Crème Brûlée", description: "Classic custard dessert with caramelized sugar top.", course: "Dessert", price: "R65" },
     { id: "9", name: "Cheesecake", description: "New York-style baked cheesecake with berry topping.", course: "Dessert", price: "R70" },
-  
   ];
 
   const filtered = menu.filter((item) => item.course === selectedCourse);
