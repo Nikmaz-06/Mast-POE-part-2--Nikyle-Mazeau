@@ -63,10 +63,11 @@ export default function FilterScreen() {
   );
 }
 
+//Stylesheet for design, UI and colour
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF8DC",
+    backgroundColor: "#FFF8DC", //Dynamic colour switching but has synergy between the white and orange contrast for a premium look
     padding: 10,
   },
   title: {

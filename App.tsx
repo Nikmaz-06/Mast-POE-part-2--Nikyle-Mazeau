@@ -43,7 +43,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Christoffel's Restaurant" }} />
-        <Stack.Screen name="AddDish" component={AddDishScreen} options={{ title: "Chef's Add Menu" }} />
+        <Stack.Screen name="AddDish" component={AddDishScreen} options={{ title: "Chef's Add new dish Menu" }} />
         <Stack.Screen name="Filter" component={FilterScreen} options={{ title: "Filter Menu" }} />
       </Stack.Navigator>
     </NavigationContainer>
