@@ -57,7 +57,7 @@ export default function HomeScreen() {
     return count > 0 ? (total / count).toFixed(2) : "0";
   };
 
-  // functionality to remove items
+  // functionality to remove items from the menu
   const removeItem = (id: string) => {
     const updatedMenu = menu.filter((item) => item.id !== id);
     setMenu(updatedMenu);
@@ -65,7 +65,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>Chef's Full Menu</Text>
+      <Text style={styles.heading}>Chef's Menu</Text>
 
       {/* average prices displayed */}
       <View style={styles.averageContainer}>
@@ -76,7 +76,7 @@ export default function HomeScreen() {
       
       <FlatList
         data={menu}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id} 
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.course}>{item.course}</Text>

@@ -1,3 +1,9 @@
+//Title: MAST5112 Student Manual
+//Author: IIE Varsity College
+//Date: 15 October 2025
+//Avaliable: https://advtechonline.sharepoint.com/:w:/r/sites/TertiaryStudents/_layouts/15/Doc.aspx?sourcedoc=%7BC4AAF478-96AC-4469-8005-F7CDC4A15EBB%7D&file=MAST5112MM.docx&action=default&mobileredirect=true
+
+
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
