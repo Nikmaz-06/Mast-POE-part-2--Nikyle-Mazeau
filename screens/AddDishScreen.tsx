@@ -45,13 +45,6 @@ export default function AddDishScreen() {
       price: "R" + price,
     };
 
-    // TEMP: For Part 3 demo, we show the saved dish via alert
-    // In Part 4 or if needed, we can send this back to HomeScreen using context/navigation params
-    Alert.alert(
-      "Dish Added",
-      ${newDish.name} has been added to the ${newDish.course} menu.
-    );
-
     // Clear fields after adding
     setDishName("");
     setDescription("");
