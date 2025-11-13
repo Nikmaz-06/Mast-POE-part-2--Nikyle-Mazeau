@@ -10,8 +10,10 @@
 //Avaliable: https://advtechonline.sharepoint.com/:w:/r/sites/TertiaryStudents/_layouts/15/Doc.aspx?sourcedoc=%7BC4AAF478-96AC-4469-8005-F7CDC4A15EBB%7D&file=MAST5112MM.docx&action=default&mobileredirect=true
 
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, FlatList, Alert, StyleSheet, SafeAreaView, ScrollView, } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type MenuItem = {
   id: string;
@@ -20,8 +22,13 @@ type MenuItem = {
   course: string;
   price: string;
 };
-/* === Displays the menu prepared by the chef with same dishes from part 1 design */
+
+type NavProp = NativeStackNavigationProp<RootStackParamList, "Home">;
+
 export default function HomeScreen() {
+  const navigation = useNavigation<NavProp>();
+
+  // ✅ Menu stored in an array (global for this screen)
   const [menu, setMenu] = useState<MenuItem[]>([
     { id: "1", name: "Asparagus Wrapped in Bacon", description: "Crispy asparagus wrapped with smoked bacon.", course: "Starter", price: "R65" },
     { id: "2", name: "Stuffed Mushrooms", description: "Mushrooms filled with cream cheese and herbs.", course: "Starter", price: "R55" },
@@ -33,38 +40,39 @@ export default function HomeScreen() {
     { id: "8", name: "Chocolate Mousse", description: "Rich and smooth dark chocolate mousse.", course: "Dessert", price: "R60" },
     { id: "9", name: "Cheesecake", description: "New York-style baked cheesecake with berry topping.", course: "Dessert", price: "R70" },
   ]);
-  /* === State variables for input fields */
-  const [dishName, setDishName] = useState("");
-  const [description, setDescription] = useState("");
-  const [course, setCourse] = useState("Starter");
-  const [price, setPrice] = useState("");
 
-  const addDish = () => {
-    /* IF statement to validate if input was made in all the fields*/
-    if (!dishName || !description || !price) {
-      Alert.alert("Error", "Please fill in all fields.");
-      return;
+  // ✅ Function to calculate average per course using a for loop
+  const calculateAverage = (course: string) => {
+    let total = 0;
+    let count = 0;
+
+    for (let i = 0; i < menu.length; i++) {
+      if (menu[i].course === course) {
+        total += parseInt(menu[i].price.replace("R", ""));
+        count++;
+      }
     }
 
-    const newDish: MenuItem = {
-      id: (menu.length + 1).toString(),
-      name: dishName,
-      description,
-      course,
-      price: "R" + price,
-    };
-    // reset input fields after validation //
-    setMenu([...menu, newDish]);
-    setDishName("");
-    setDescription("");
-    setPrice("");
+    return count > 0 ? (total / count).toFixed(2) : "0";
   };
-  /* input section */
+
+  // ✅ Remove item function
+  const removeItem = (id: string) => {
+    const updatedMenu = menu.filter((item) => item.id !== id);
+    setMenu(updatedMenu);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>Today's Menu</Text>
-      <Text style={styles.subHeading}>Total Menu Items: {menu.length}</Text>
-      {/* to display the menu items */}
+      <Text style={styles.heading}>Chef's Full Menu</Text>
+
+      {/* Display Average Prices */}
+      <View style={styles.averageContainer}>
+        <Text style={styles.averageText}>Avg Starter: R{calculateAverage("Starter")}</Text>
+        <Text style={styles.averageText}>Avg Main: R{calculateAverage("Main")}</Text>
+        <Text style={styles.averageText}>Avg Dessert: R{calculateAverage("Dessert")}</Text>
+      </View>
+
       <FlatList
         data={menu}
         keyExtractor={(item) => item.id}
@@ -74,66 +82,38 @@ export default function HomeScreen() {
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.desc}>{item.description}</Text>
             <Text style={styles.price}>{item.price}</Text>
+            <TouchableOpacity onPress={() => removeItem(item.id)} style={styles.removeButton}>
+              <Text style={styles.removeText}>Remove</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
-      
-      <ScrollView style={styles.form}>
-        <Text style={styles.formHeading}>Add New Dish</Text>
-        <TextInput
-          placeholder="Dish Name"
-          value={dishName}
-          onChangeText={setDishName}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Description"
-          value={description}
-          onChangeText={setDescription}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Price (numbers only)"
-          value={price}
-          onChangeText={setPrice}
-          keyboardType="numeric"
-          style={styles.input}
-        />
-        {/* Picker code to allow the user to select the specific course for the dish */}
-        <Picker selectedValue={course} onValueChange={setCourse} style={styles.picker}>
-          <Picker.Item label="Starter" value="Starter" />
-          <Picker.Item label="Main" value="Main" />
-          <Picker.Item label="Dessert" value="Dessert" />
-        </Picker>
 
-        <Button title="Add Dish" onPress={addDish} color="#FF8C00" />
-      </ScrollView>
+      <View style={styles.navButtons}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddDish")}>
+          <Text style={styles.buttonText}>Add new Dish</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Filter")}>
+          <Text style={styles.buttonText}>Filter Menu</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
-/* === Stylesheet for colours, font and design */
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFA500", padding: 10 },
   heading: { fontSize: 26, fontWeight: "bold", textAlign: "center", color: "white" },
-  subHeading: { textAlign: "center", color: "white", marginBottom: 10 },
-  card: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    padding: 10,
-    marginVertical: 5,
-  },
-  // orange theme to match up with my design from part 1 //
+  card: { backgroundColor: "white", borderRadius: 12, padding: 10, marginVertical: 5 },
   course: { fontWeight: "bold", color: "#FF8C00" },
   name: { fontSize: 16, fontWeight: "bold" },
   desc: { color: "#555" },
   price: { color: "#000", fontWeight: "600" },
-  form: { marginTop: 10 },
-  formHeading: { fontSize: 18, fontWeight: "bold", marginVertical: 10, color: "white" },
-  input: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 8,
-    marginBottom: 10,
-  },
-  picker: { backgroundColor: "white", borderRadius: 10, marginBottom: 10 },
+  removeButton: { marginTop: 5, backgroundColor: "#ff6347", padding: 5, borderRadius: 6 },
+  removeText: { color: "white", textAlign: "center" },
+  navButtons: { flexDirection: "row", justifyContent: "space-around", marginTop: 10 },
+  button: { backgroundColor: "#FF8C00", padding: 12, borderRadius: 25 },
+  buttonText: { color: "white", fontWeight: "bold" },
+  averageContainer: { marginVertical: 10, backgroundColor: "white", padding: 10, borderRadius: 10 },
+  averageText: { fontWeight: "bold", color: "#FF8C00", textAlign: "center" },
 });
