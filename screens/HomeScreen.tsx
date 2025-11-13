@@ -14,6 +14,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+// Import navigation stacks
 
 type MenuItem = {
   id: string;
@@ -28,7 +29,7 @@ type NavProp = NativeStackNavigationProp<RootStackParamList, "Home">;
 export default function HomeScreen() {
   const navigation = useNavigation<NavProp>();
 
-  // ✅ Menu stored in an array (global for this screen)
+  // Menu stored in an array (Global)
   const [menu, setMenu] = useState<MenuItem[]>([
     { id: "1", name: "Asparagus Wrapped in Bacon", description: "Crispy asparagus wrapped with smoked bacon.", course: "Starter", price: "R65" },
     { id: "2", name: "Stuffed Mushrooms", description: "Mushrooms filled with cream cheese and herbs.", course: "Starter", price: "R55" },
@@ -41,7 +42,7 @@ export default function HomeScreen() {
     { id: "9", name: "Cheesecake", description: "New York-style baked cheesecake with berry topping.", course: "Dessert", price: "R70" },
   ]);
 
-  // ✅ Function to calculate average per course using a for loop
+  // Function to calculate the average using the for loop
   const calculateAverage = (course: string) => {
     let total = 0;
     let count = 0;
@@ -56,7 +57,7 @@ export default function HomeScreen() {
     return count > 0 ? (total / count).toFixed(2) : "0";
   };
 
-  // ✅ Remove item function
+  // functionality to remove items
   const removeItem = (id: string) => {
     const updatedMenu = menu.filter((item) => item.id !== id);
     setMenu(updatedMenu);
@@ -66,13 +67,13 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.heading}>Chef's Full Menu</Text>
 
-      {/* Display Average Prices */}
+      {/* average prices displayed */}
       <View style={styles.averageContainer}>
-        <Text style={styles.averageText}>Avg Starter: R{calculateAverage("Starter")}</Text>
-        <Text style={styles.averageText}>Avg Main: R{calculateAverage("Main")}</Text>
-        <Text style={styles.averageText}>Avg Dessert: R{calculateAverage("Dessert")}</Text>
+        <Text style={styles.averageText}>Average Starter: R{calculateAverage("Starter")}</Text>
+        <Text style={styles.averageText}>Average Main: R{calculateAverage("Main")}</Text>
+        <Text style={styles.averageText}>Average Dessert: R{calculateAverage("Dessert")}</Text>
       </View>
-
+      
       <FlatList
         data={menu}
         keyExtractor={(item) => item.id}
@@ -83,7 +84,7 @@ export default function HomeScreen() {
             <Text style={styles.desc}>{item.description}</Text>
             <Text style={styles.price}>{item.price}</Text>
             <TouchableOpacity onPress={() => removeItem(item.id)} style={styles.removeButton}>
-              <Text style={styles.removeText}>Remove</Text>
+              <Text style={styles.removeText}>Remove</Text> 
             </TouchableOpacity>
           </View>
         )}
@@ -94,13 +95,14 @@ export default function HomeScreen() {
           <Text style={styles.buttonText}>Add new Dish</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Filter")}>
-          <Text style={styles.buttonText}>Filter Menu</Text>
+          <Text style={styles.buttonText}>Filter Menu</Text> 
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaView>  // navigation buttons to take the user to the AddDish screen and Filter screen
   );
 }
 
+//Stylesheet for design and color, consistent and mordern orange theme from pervious parts
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFA500", padding: 10 },
   heading: { fontSize: 26, fontWeight: "bold", textAlign: "center", color: "white" },

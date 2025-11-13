@@ -1,9 +1,3 @@
-// AddDishScreen.tsx
-// References:
-//  - W3Schools React Native Forms: https://www.w3schools.com/react/react_forms.asp
-//  - Varsity College Student Manual (WIL Project Development Guide, 2025)
-//  - React Native Docs: https://reactnative.dev/docs/textinput
-
 import React, { useState } from "react";
 import {
   View,
@@ -17,26 +11,26 @@ import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
+//Imported navigation stacks
 type NavProp = NativeStackNavigationProp<RootStackParamList, "AddDish">;
 
 export default function AddDishScreen() {
   const navigation = useNavigation<NavProp>();
 
-  // Local states for form inputs
+  // state variables for input
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [course, setCourse] = useState("Starter");
 
-  // Function to handle adding a new dish
+  // functionality to add new dish
   const handleAddDish = () => {
     if (!name || !description || !price) {
       Alert.alert("Missing Information", "Please fill in all fields.");
       return;
     }
 
-    // Simulated save – in a real app, this would update global state or API
+    
     console.log("New Dish Added:", { name, description, price, course });
     Alert.alert("Dish Added", ${name} has been added to the ${course} menu.);
     navigation.goBack(); // Return to Home Screen
@@ -46,7 +40,7 @@ export default function AddDishScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Chef's Add Dish</Text>
 
-      {/* Dish Name Input */}
+      {/* input for the name of the dish */}
       <TextInput
         style={styles.input}
         placeholder="Dish Name"
@@ -54,7 +48,7 @@ export default function AddDishScreen() {
         onChangeText={setName}
       />
 
-      {/* Dish Description Input */}
+      {/* input for description of the dish */}
       <TextInput
         style={[styles.input, { height: 80 }]}
         placeholder="Dish Description"
@@ -63,7 +57,7 @@ export default function AddDishScreen() {
         multiline
       />
 
-      {/* Price Input */}
+      {/* input for price */}
       <TextInput
         style={styles.input}
         placeholder="Price (e.g. R75)"
@@ -72,7 +66,7 @@ export default function AddDishScreen() {
         onChangeText={setPrice}
       />
 
-      {/* Course Picker */}
+      {/* Picker to specify course */}
       <Text style={styles.label}>Select Course:</Text>
       <Picker
         selectedValue={course}
@@ -84,7 +78,7 @@ export default function AddDishScreen() {
         <Picker.Item label="Dessert" value="Dessert" />
       </Picker>
 
-      {/* Add Dish Button */}
+      {/* Button to add the dish */}
       <TouchableOpacity style={styles.button} onPress={handleAddDish}>
         <Text style={styles.buttonText}>Add Dish</Text>
       </TouchableOpacity>
@@ -92,7 +86,7 @@ export default function AddDishScreen() {
   );
 }
 
-// ✅ Modern, simple, consistent design
+// Consistent orange design from part 1 and 2
 const styles = StyleSheet.create({
   container: {
     flex: 1,

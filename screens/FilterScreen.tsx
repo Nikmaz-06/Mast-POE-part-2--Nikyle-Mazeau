@@ -1,9 +1,3 @@
-// FilterScreen.tsx
-// References:
-//  - W3Schools React Native ListView: https://www.w3schools.com/react/react_list.asp
-//  - Varsity College Student Manual (WIL Project Development Guide, 2025)
-//  - React Native Docs: https://reactnative.dev/docs/flatlist
-
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -19,7 +13,7 @@ type MenuItem = {
 export default function FilterScreen() {
   const [selectedCourse, setSelectedCourse] = useState("Starter");
 
-  // Sample menu from HomeScreen
+  // Menu from the home screen
   const menu: MenuItem[] = [
     { id: "1", name: "Asparagus Wrapped in Bacon", description: "Crispy asparagus wrapped with smoked bacon.", course: "Starter", price: "R65" },
     { id: "2", name: "Grilled Salmon", description: "Fresh salmon fillet with lemon butter sauce.", course: "Main", price: "R150" },
